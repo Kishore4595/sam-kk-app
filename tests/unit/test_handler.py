@@ -63,5 +63,11 @@ def apigw_event():
 
 def test_lambda_handler(apigw_event, mocker):
 
-    with pytest.raises(Exception, match="This will cause a deployment rollback"):
-        app.lambda_handler(apigw_event, "")
+    assert True
+    ret = app.lambda_handler(apigw_event, "")
+    data = json.loads(ret["body"])
+    status_code = 200
+    assert ret["statusCode"] == status_code
+    assert "message" in ret["body"]
+    assert data["message"] == "hello kishore world, I am making some changes"
+    # assert "location" in data.dict_keys()
